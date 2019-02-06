@@ -1,5 +1,7 @@
 package com.vdibka.runtracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,8 @@ public class Training {
     private Double distance;
     private Integer time;
     private Date date;
-    private Long userId;
+    @JsonIgnore
+    private User user;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,12 +61,12 @@ public class Training {
     
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    public Long getUser() {
-        return userId;
+    public User getUser() {
+        return user;
     }
     
-    public void setUser(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
     
     @Override
@@ -72,7 +75,6 @@ public class Training {
         if (!(o instanceof Training)) return false;
         
         Training training = (Training) o;
-    
         return id != null ? id.equals(training.id) : training.id == null;
     }
     

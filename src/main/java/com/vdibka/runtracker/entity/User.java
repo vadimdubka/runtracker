@@ -1,5 +1,7 @@
 package com.vdibka.runtracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,9 +22,13 @@ import java.util.Set;
 public class User {
     private Long id;
     private String username;
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String passwordConfirm;
+    @JsonIgnore
     private Set<Role> roles;
+    @JsonIgnore
     private Set<Training> trainings = new HashSet<>();
     
     @Id
@@ -72,15 +78,15 @@ public class User {
         this.roles = roles;
     }
     
-    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     public Set<Training> getTrainings() {
         return trainings;
     }
-    
+
     public void setTrainings(Set<Training> trainings) {
         this.trainings = trainings;
     }
-    
+
     public void addTraining(Training training) {
         trainings.add(training);
     }
